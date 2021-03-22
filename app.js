@@ -1,4 +1,5 @@
 // on effectue les imports des modules nécessaires
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 // connection à ma base de données MongoDB
@@ -14,10 +15,15 @@ const PORT = 3000;
 app.use(express.urlencoded({ extended: true}));
 // express doit gérer le format json
 app.use(express.json());
+// on enlève la sécurité CORS
+app.use(cors());
 // chargement de mes routes
 const router = require('./src/routes/crmRoutes');
 // on fait passer l'app Express dans notre methode routes
 router.routes(app);
+
+// rendre dispo mon dossier public
+app.use( express.static('public') );
 
 // on a la route / principale
 app.get('/', (req,res) => {
